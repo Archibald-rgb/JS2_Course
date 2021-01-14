@@ -1,0 +1,30 @@
+.header {
+	display: flex;
+	flex-direction: row-reverse;
+	max-width: 1300px;
+	margin: 20px auto;
+	background-color: #fffab1;
+}
+
+.products {
+	max-width: 1300px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+}
+
+.product-item {
+	width: 20%;
+	box-sizing: border-box;
+	background-color: #e2e2e2;
+	padding: 10px;
+	border: #e2e2e2 solid;
+	border-radius: 5px;
+}
+
+.btn-cart {
+	background-color: #7c5fff;
+	border-radius: 5px;
+	color: #ffffff;
+}
