@@ -13,15 +13,15 @@
         <header>
             <div class="logo">E-shop</div>
             <div class="cart">
-                <form action="#" class="search-form">
-                    <input v-model="searchMsg" type="text" class="search-field">
+                <form action="#" class="search-form" @submit.prevent="">
+                    <input v-model.lazy="searchMsg" type="text" class="search-field">
                     <button @click="filter" class="btn-search" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-                <button class="btn-cart" @click="toggleInvisible()">Корзина</button>
-                <div class="cart-block" :class="{invisible: isInvisibleCart}">
-                    <h2 v-if="isEmptyCart">Корзина пуста</h2>
+                <button class="btn-cart" @click="showCart = !showCart">Корзина</button>
+                <div class="cart-block" v-show="showCart">
+                    <h2 v-if="!cartItems.length">Корзина пуста</h2>
                     <div class="cart-item" v-for="el of cartItems" :key="el.id_product">
                         <div class="product-bio">
                             <img :src="imgCart" :alt="el.product_name">
@@ -41,7 +41,8 @@
         </header>
         <main>
             <div class="products">
-                <div class="product-item" :class="{invisible:el.filtered}" v-for="el of products" :key="el.id_product">
+                <div class="product-item" :class="{invisible: !getRegExp.test(el.product_name)}" v-for="el of products"
+                    :key="el.id_product">
                     <img :src="imgCatalog" :alt="el.product_name">
                     <div class="desc">
                         <h3>{{ el.product_name }}</h3>

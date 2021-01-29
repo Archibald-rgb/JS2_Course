@@ -6,8 +6,7 @@ const Shop = {
             cartUrl: '/getBasket.json',
             products: [],
             cartItems: [],
-            isInvisibleCart: true,
-            isEmptyCart: true,
+            showCart: false,
             imgCatalog: 'https://placehold.it/200x150',
             imgCart: 'https://placehold.it/50x100',
             searchMsg: ''
@@ -33,7 +32,6 @@ const Shop = {
                         console.log('error');
                     }
                 });
-            this.showCartEmpty();
         },
         deletProduct(product) {
             this.getJson(`${this.API}/deleteFromBasket.json`)
@@ -48,34 +46,12 @@ const Shop = {
                         console.log('error');
                     }
                 });
-            this.showCartEmpty();
         },
-        filter() {
-            const regexp = new RegExp(this.searchMsg, 'i');
-            for (let product of this.products) {
-                if (!regexp.test(product.product_name)) {
-                    product.filtered = true;
-                } else {
-                    delete product.filtered;
-                }
-            }
-        },
-        toggleInvisible() {
-            this.isInvisibleCart ? this.isInvisibleCart = false : this.isInvisibleCart = true;
-            this.showCartEmpty();
-        },
-        showCartEmpty() {
-            if (this.cartItems != undefined && this.cartItems.length > 0) {
-                this.isEmptyCart = false;
-                console.log(this.isEmptyCart);
-                console.log(this.cartItems.length);
-                console.log(this.cartItems);
-            } else {
-                this.isEmptyCart = true;
-                console.log(this.isEmptyCart);
-                console.log(this.cartItems.length);
-                console.log(this.cartItems);
-            }
+
+    },
+    computed: {
+        getRegExp() {
+            return new RegExp(this.searchMsg, 'i');
         }
     },
     mounted() {
