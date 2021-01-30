@@ -1,15 +1,17 @@
+import { Search } from "./search.js";
+import { Cart } from "./Cart.js";
+import { Products } from "./Products.js";
+
+
+
+
 const Shop = {
+    components: {
+        Search, Cart, Products
+    },
     data() {
         return {
-            API: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses',
-            catalogUrl: '/catalogData.json',
-            cartUrl: '/getBasket.json',
-            products: [],
-            cartItems: [],
-            showCart: false,
-            imgCatalog: 'https://placehold.it/200x150',
-            imgCart: 'https://placehold.it/50x100',
-            searchMsg: ''
+            API: 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
         }
     },
     methods: {
@@ -18,63 +20,7 @@ const Shop = {
                 .then(result => result.json())
                 .catch(error => console.log(error));
         },
-        addProduct(product) {
-            this.getJson(`${this.API}/addToBasket.json`)
-                .then(data => {
-                    if (data.result) {
-                        let find = this.cartItems.find(el => el.id_product === product.id_product);
-                        if (find) {
-                            find.quantity++;
-                        } else {
-                            this.cartItems.push(Object.assign({ quantity: 1 }, product));
-                        }
-                    } else {
-                        console.log('error');
-                    }
-                });
-        },
-        deletProduct(product) {
-            this.getJson(`${this.API}/deleteFromBasket.json`)
-                .then(data => {
-                    if (data.result) {
-                        if (product.quantity > 1) {
-                            product.quantity -= 1;
-                        } else {
-                            this.cartItems.splice(this.cartItems.indexOf(product), 1);
-                        }
-                    } else {
-                        console.log('error');
-                    }
-                });
-        },
-
     },
-    computed: {
-        getRegExp() {
-            return new RegExp(this.searchMsg, 'i');
-        }
-    },
-    mounted() {
-        this.getJson(`${this.API + this.catalogUrl}`)
-            .then(data => {
-                for (let product of data) {
-                    this.products.push(product);
-                }
-            });
-        this.getJson(`getProducts.json`)
-            .then(data => {
-                for (let product of data) {
-                    this.products.push(product);
-                }
-            });
-
-        this.getJson(`${this.API + this.cartUrl}`)
-            .then(data => {
-                for (let product of data.contents) {
-                    this.cartItems.push(product);
-                }
-            });
-    }
 };
 
 Vue.createApp(Shop).mount('#app');
