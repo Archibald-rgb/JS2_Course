@@ -35,7 +35,7 @@ export const Cart = {
 				});
 		},
 		deletProduct(product) {
-			this.getJson(`${this.API}/deleteFromBasket.json`)
+			this.putJson(`/api/cart/${product.id_product}`, { quantity: -1 })
 				.then(data => {
 					if (data.result) {
 						if (product.quantity > 1) {
@@ -43,8 +43,6 @@ export const Cart = {
 						} else {
 							this.cartItems.splice(this.cartItems.indexOf(product), 1);
 						}
-					} else {
-						console.log('error');
 					}
 				});
 		},
