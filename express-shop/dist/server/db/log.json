@@ -1,0 +1,17 @@
+[
+    {
+        "action": "DELETE",
+        "productName": "Мышка",
+        "time": "02/03/2021 5:17:18 PM"
+    },
+    {
+        "action": "DELETE",
+        "productName": "Ноутбук",
+        "time": "02/03/2021 5:18:07 PM"
+    },
+    {
+        "action": "ADD",
+        "productName": "Gamepad",
+        "time": "02/03/2021 5:18:08 PM"
+    }
+]
